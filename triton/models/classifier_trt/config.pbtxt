@@ -1,0 +1,31 @@
+name: "classifier_trt"              # Имя модели (должно совпадать с именем папки)
+platform: "tensorrt_plan"           # Платформа модели (TensorRT использует "tensorrt_plan")
+max_batch_size: 16                   # Максимальный размер батча
+
+input [
+  {
+    name: "input"                  # Имя входного тензора
+    data_type: TYPE_FP16           # Тип данных (например, FP32)
+    dims: [3, 224, 224]            # Размерность входных данных (без размера батча)
+  }
+]
+
+output [
+  {
+    name: "output"                 # Имя выходного тензора
+    data_type: TYPE_FP16           # Тип данных (например, FP32)
+    dims: [1000]                   # Размерность выходных данных (например, 1000 классов)
+  }
+]
+
+dynamic_batching {                 # Настройка динамического батчинга
+    preferred_batch_size: 8
+    max_queue_delay_microseconds: 10000
+}
+
+instance_group [
+  {
+    kind: KIND_GPU                 # Использование GPU
+    count: 1                       # Количество экземпляров модели на GPU
+  }
+]
