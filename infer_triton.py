@@ -38,6 +38,7 @@ class InferenceModule:
 
         # Preprocess the image
         img = self.preprocess_image_torchvision(img)  # или preprocess_image_pil
+        # img = self.preprocess_image_pil(img)  # или preprocess_image_pil
 
         # Create input tensor for Triton
         inputs = [grpcclient.InferInput(model_meta.inputs[0].name, [1, channels, height, width], dtype)]

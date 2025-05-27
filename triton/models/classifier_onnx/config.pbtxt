@@ -1,6 +1,6 @@
 name: "classifier_onnx"
 platform: "onnxruntime_onnx"
-max_batch_size: 16
+max_batch_size: 1
 
 input [
   {
@@ -18,7 +18,3 @@ output [
     dims: [1000]
   }
 ]
-
-  dynamic_batching {
-    preferred_batch_size: [ 4, 8 ]
-  }
